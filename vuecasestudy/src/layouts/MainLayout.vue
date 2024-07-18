@@ -1,0 +1,27 @@
+<template>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated>
+      <q-toolbar>
+        <q-toolbar-title>Info3181 Case Study</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <div class="text-subtitle2">
+            best viewed on mobile device — Mohamad Arafat &copy;{{
+              new Date().getFullYear()
+            }}
+          </div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+  </q-layout>
+</template>
+
+<script setup></script>
