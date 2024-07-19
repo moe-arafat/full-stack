@@ -27,6 +27,12 @@ const routes = [
         name: "Category List",
         component: () => import("pages/CategoryListPage.vue"),
       },
+      // Tray List Page
+      {
+        path: "/tray",
+        name: "Tray List",
+        component: () => import("pages/TrayPage.vue"),
+      },
     ],
   },
   // Always leave this as last one,
