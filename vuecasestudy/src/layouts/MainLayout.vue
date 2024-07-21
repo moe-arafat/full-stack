@@ -3,6 +3,18 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>Info3181 Case Study</q-toolbar-title>
+        <q-btn flat round dense icon="reorder" class="q-mr-xs">
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup to="/brands">
+                <q-item-section>Brands</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup to="/cart">
+                <q-item-section>Cart</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
