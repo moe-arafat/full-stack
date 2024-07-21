@@ -1,5 +1,8 @@
 <template>
   <div class="text-center q-pa-md">
+    <q-avatar size="xxl">
+      <img src="../../public/img/logo.png" alt="Casestudy Logo" />
+    </q-avatar>
     <div class="text-h4 q-mt-md text-primary">Cart Contents</div>
     <q-avatar class="q-mt-md" size="xl" square>
       <img src="cart.png" alt="Cart Image" />
@@ -28,7 +31,7 @@
             class="q-pa-xs"
           >
             <q-item-section class="col-3 text-small text-left">
-              {{ cartItem.item.description }}
+              {{ cartItem.item.productName }}
             </q-item-section>
             <q-item-section class="col-2 text-small text-left">
               {{ cartItem.qty }}
