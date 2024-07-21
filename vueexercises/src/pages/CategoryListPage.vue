@@ -78,16 +78,7 @@
               transition-hide="flip-left"
               text-color="white"
             >
-              <div>
-                Protein: 45gm<br />
-                Calories: 610<br />
-                Carbs: 50gm<br />
-                Fibre: 3gm<br />
-                Cholesterol: 125mg<br />
-                Salt: 1750mg<br />
-                Fat: 26gm<br />
-                Sugar: 10gm<br />
-              </div>
+              {{ state.selectedMenuItem.protein }}
             </q-tooltip>
           </q-chip>
         </q-card-section>
@@ -133,10 +124,11 @@ import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const router = useRouter();
     onMounted(() => {
       loadCategories();
     });
+
+    const router = useRouter();
 
     let state = reactive({
       status: "",
