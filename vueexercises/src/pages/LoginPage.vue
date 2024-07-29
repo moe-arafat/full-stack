@@ -32,7 +32,7 @@
 
 <script>
 import { reactive } from "vue";
-import { poster } from "../utils/apiutil"; // Adjusted import path
+import { poster } from "../utils/apiutil";
 import { useRouter, useRoute } from "vue-router";
 
 export default {

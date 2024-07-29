@@ -1,5 +1,17 @@
 const serverURL = "https://localhost:7246/api/";
 
+const buildHeaders = () => {
+  const myHeaders = new Headers();
+  const customer = JSON.parse(sessionStorage.getItem("customer"));
+  if (customer) {
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer " + customer.token);
+  } else {
+    myHeaders.append("Content-Type", "application/json");
+  }
+  return myHeaders;
+};
+
 const fetcher = async (endpoint) => {
   let payload;
   let headers = buildHeaders();
@@ -14,18 +26,6 @@ const fetcher = async (endpoint) => {
     payload = { error: `Error has occured: ${err.message}` };
   }
   return payload;
-};
-
-const buildHeaders = () => {
-  const myHeaders = new Headers();
-  const customer = JSON.parse(sessionStorage.getItem("customer"));
-  if (customer) {
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Bearer " + customer.token);
-  } else {
-    myHeaders.append("Content-Type", "application/json");
-  }
-  return myHeaders;
 };
 
 const poster = async (endpoint, dataToPost) => {

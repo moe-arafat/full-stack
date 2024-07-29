@@ -3,7 +3,6 @@
     <q-avatar size="xxl">
       <img src="../../public/img/logo.png" alt="Casestudy Logo" />
     </q-avatar>
-    <div class="text-h2 q-mt-md">Brands</div>
   </div>
   <div class="text-h4 text-center q-mt-md q-mb-md text-primary">Login</div>
   <div class="text-title2 text-center text-negative text-bold q-mt-sm">
@@ -38,7 +37,7 @@
 
 <script>
 import { reactive } from "vue";
-import { poster } from "../utils/apiutil"; // Adjusted import path
+import { poster } from "../utils/apiutil";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -66,7 +65,8 @@ export default {
       };
       try {
         let payload = await poster("customer/login", customerHelper);
-        if (!payload.token.includes("invalid")) {
+
+        if (!payload.token.includes("no such customer - login failed")) {
           sessionStorage.setItem("customer", JSON.stringify(payload));
           state.status = "Login successful";
           route.query.nextUrl
@@ -76,7 +76,7 @@ export default {
           state.status = "Login failed";
         }
       } catch (err) {
-        state.status = err.message;
+        state.status = "Error: " + err.message;
       }
     };
 
