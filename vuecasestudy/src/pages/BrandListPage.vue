@@ -105,6 +105,13 @@
               @click="addToCart()"
               style="max-width: 25vw; margin-left: 3vw"
             />
+            <q-btn
+              color="primary"
+              label="View Cart"
+              :disable="state.qty < 0"
+              @click="viewCart()"
+              style="max-width: 25vw; margin-left: 3vw"
+            />
           </div>
         </q-card-section>
         <q-card-section class="text-center text-positive">
@@ -119,12 +126,15 @@
 import { reactive, onMounted } from "vue";
 import { fetcher } from "../utils/apiutil";
 import { formatCurrency } from "../utils/formatutils";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
     onMounted(() => {
       loadBrands();
     });
+
+    const router = useRouter();
 
     const state = reactive({
       status: "",
@@ -210,12 +220,17 @@ export default {
       state.qty = 0;
     };
 
+    const viewCart = () => {
+      router.push("cart");
+    };
+
     return {
       state,
       loadBrands,
       getProducts,
       selectProduct,
       addToCart,
+      viewCart,
       formatCurrency,
     };
   },

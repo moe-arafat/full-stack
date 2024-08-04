@@ -66,14 +66,14 @@ export default {
       try {
         let payload = await poster("customer/login", customerHelper);
 
-        if (!payload.token.includes("no such customer - login failed")) {
+        if (payload.token && !payload.token.includes("login failed")) {
           sessionStorage.setItem("customer", JSON.stringify(payload));
           state.status = "Login successful";
           route.query.nextUrl
             ? router.push({ path: route.query.nextUrl })
             : router.push({ path: "/" });
         } else {
-          state.status = "Login failed";
+          state.status = payload.token;
         }
       } catch (err) {
         state.status = "Error: " + err.message;

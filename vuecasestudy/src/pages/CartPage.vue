@@ -48,9 +48,9 @@
               <span class="text-small">Sub:</span>
             </q-item-section>
             <q-item-section class="col-4 text-left">
-              <span class="text-small">{{
-                formatCurrency(state.subtotal)
-              }}</span>
+              <span class="text-small"
+                >${{ formatCurrency(state.subtotal) }}</span
+              >
             </q-item-section>
           </q-item>
           <q-item class="q-pa-xs">
@@ -58,7 +58,7 @@
               <span class="text-small">Tax(13%):</span>
             </q-item-section>
             <q-item-section class="col-4 text-left">
-              <span class="text-small">{{ formatCurrency(state.tax) }}</span>
+              <span class="text-small">${{ formatCurrency(state.tax) }}</span>
             </q-item-section>
           </q-item>
           <q-item class="q-pa-xs">
@@ -66,15 +66,16 @@
               <span class="text-small text-bold">Total:</span>
             </q-item-section>
             <q-item-section class="col-4 text-left">
-              <span class="text-small text-bold">{{
-                formatCurrency(state.total)
-              }}</span>
+              <span class="text-small text-bold"
+                >${{ formatCurrency(state.total) }}</span
+              >
             </q-item-section>
           </q-item>
         </q-list>
       </q-card>
     </q-scroll-area>
     <q-card-section>
+      <q-btn @click="checkout" label="Save Cart" color="primary"></q-btn>
       <q-btn
         @click="clearCart"
         icon="delete"
@@ -88,6 +89,7 @@
 <script>
 import { reactive, onMounted } from "vue";
 import { formatCurrency } from "../utils/formatutils";
+import { poster } from "../utils/apiutil";
 
 export default {
   setup() {
@@ -99,34 +101,72 @@ export default {
       total: 0,
     });
 
-    const calculateTotals = () => {
-      state.subtotal = state.cart.reduce(
-        (acc, item) => acc + item.item.msrp * item.qty,
-        0
-      );
-      state.tax = state.subtotal * 0.13;
-      state.total = state.subtotal + state.tax;
-    };
-
     onMounted(() => {
       const fetchedCart = JSON.parse(sessionStorage.getItem("cart"));
+      console.log(fetchedCart);
+
+      let subtotal = 0;
+
+      fetchedCart.forEach((cartItem) => {
+        const extended = cartItem.qty * cartItem.item.msrp;
+        cartItem.extended = extended;
+        subtotal += extended;
+      });
+
+      const tax = subtotal * 0.13;
+      const total = subtotal + tax;
+
       state.cart = fetchedCart;
-      calculateTotals();
+      state.subtotal = subtotal.toFixed(2);
+      state.tax = tax.toFixed(2);
+      state.total = total.toFixed(2);
     });
+
+    const checkout = async () => {
+      let customer = JSON.parse(sessionStorage.getItem("customer"));
+      let cart = JSON.parse(sessionStorage.getItem("cart"));
+
+      console.log("customer", customer);
+      console.log("cart", cart);
+      try {
+        state.status = "sending cart info to server";
+        let cartHelper = {
+          email: customer.email,
+          orderAmount: state.orderAmount,
+          orderLineItems: cart.map((item) => ({
+            productId: item.item.id,
+            qtyOrdered: item.qty,
+            qtySold: item.qtySold,
+            qtyBackOrdered: item.qtyBackOrdered,
+            sellingPrice: item.item.msrp,
+          })),
+        };
+
+        let payload = await poster("order", cartHelper);
+        console.log("just checking", payload);
+        if (payload.indexOf("not") > 0) {
+          state.status = payload;
+        } else {
+          clearCart();
+          state.status = payload;
+        }
+      } catch (err) {
+        console.log(err);
+        state.status = `Error add cart: ${err}`;
+      }
+    };
 
     const clearCart = () => {
       sessionStorage.removeItem("cart");
       state.cart = [];
-      state.subtotal = 0;
-      state.tax = 0;
-      state.total = 0;
-      state.status = "cart cleared";
+      state.status = "Cart cleared";
     };
 
     return {
       state,
-      clearCart,
       formatCurrency,
+      clearCart,
+      checkout,
     };
   },
 };

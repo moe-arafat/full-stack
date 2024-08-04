@@ -37,6 +37,7 @@ const poster = async (endpoint, dataToPost) => {
       headers: headers,
       body: JSON.stringify(dataToPost),
     });
+    console.log("posterfunction", response);
     payload = await response.json();
   } catch (error) {
     payload = error;
