@@ -51,6 +51,12 @@ const routes = [
         name: "Logout",
         component: () => import("pages/LogoutPage.vue"),
       },
+      // Tray History Page
+      {
+        path: "/history",
+        name: "History",
+        component: () => import("pages/TrayHistoryPage.vue"),
+      },
     ],
   },
   // Always leave this as last one,
