@@ -25,6 +25,15 @@
               <q-item clickable v-close-popup to="history">
                 <q-item-section>Tray History</q-item-section>
               </q-item>
+              <q-item clickable v-close-popup to="maps">
+                <q-item-section>Map</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup to="utils">
+                <q-item-section>Data Utility</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup to="locator">
+                <q-item-section>Store Locator</q-item-section>
+              </q-item>
             </q-list>
           </q-menu>
         </q-btn>

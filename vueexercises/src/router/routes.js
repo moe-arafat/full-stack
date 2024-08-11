@@ -57,6 +57,18 @@ const routes = [
         name: "History",
         component: () => import("pages/TrayHistoryPage.vue"),
       },
+      // Map page
+      {
+        path: "/maps",
+        name: "maps",
+        component: () => import("pages/StoreLocatorPage.vue"),
+      },
+      // Util page
+      {
+        path: "/utils",
+        name: "utils",
+        component: () => import("pages/UtilPage.vue"),
+      },
     ],
   },
   // Always leave this as last one,
