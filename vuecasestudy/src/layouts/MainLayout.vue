@@ -24,6 +24,9 @@
               <q-item clickable v-close-popup to="history">
                 <q-item-section>Order History</q-item-section>
               </q-item>
+              <q-item clickable v-close-popup to="location">
+                <q-item-section>Branch Location</q-item-section>
+              </q-item>
             </q-list>
           </q-menu>
         </q-btn>

@@ -42,6 +42,12 @@ const routes = [
         name: "History",
         component: () => import("pages/OrderHistoryPage.vue"),
       },
+      // Branch Location Page
+      {
+        path: "/location",
+        name: "Location",
+        component: () => import("pages/BranchLocatorPage.vue"),
+      },
     ],
   },
   {
